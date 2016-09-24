@@ -5,33 +5,34 @@
 			"bin": {
 				"bin_name": "program.exc",
 				"cc": "g++",
-				"lflags": [],
-				"lib_directories": [
-					"libs"
+				"lflags": [
 				],
-				"libs": []
+				"lib_directories": [
+				],
+				"libs": [
+				]
 			},
 			"modules": {
 				"MAIN": {
 					"cc": "g++",
-					"cflags": [],
-					"pch": [],
+					"cflags": [
+					],
+					"pch": [
+					],
 					"include_directories": {
 						"include_directories": [
-							"include",
-							"include/include2"
 						],
 						"include_directories_recursive": [
-							"include_recursive"
 						]
 					},
 					"src": {
-						"src": [],
+						"src": [
+						],
 						"search": {
 							"directories": [
-								"src"
 							],
-							"directories_recursive": [],
+							"directories_recursive": [
+							],
 							"filetypes": [
 								"c",
 								"cpp",
