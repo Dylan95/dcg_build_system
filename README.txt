@@ -33,9 +33,9 @@ Table of Contents:
 	Configuration file: "dcg_build_system/config.json" 
 		Modify this file to configure the build system.  It tells it where to look for source files, compiler and linker flags, and other such information.  
 		It supports multiple configurations.  Which is usefull if you want a debug version that generates debug information but reduces performance, and a release version that maximizes performance.
-		It supports multiple modules, which is usefull for large projects which often are broken into smaller libraries which individual programmers work on.  To add a module, copy and paste the empty module "EMPTY" in "install/dcg_build_system/config.json" into your config file, into the "modules" object.  Then configure it as you see fit.  You may want to keep a "module.json" right with the module, and copy and paste it into the "config.json" for any project you wish to use it with.  Logically, a module is a group of source files that are compiled using the same settings.
+		It supports multiple modules, which is usefull for large projects which often are broken into smaller libraries which individual programmers work on.  To add a module, copy and paste the empty module "MAIN" in "install/dcg_build_system/config.json" into your config file, into the "modules" object.  Then configure it as you see fit.  You may want to keep a "module.json" right with the module, and copy and paste it into the "config.json" for any project you wish to use it with.  Logically, a module is a group of source files that are compiled using the same settings.
 
-	static and shared libraries can be created instead of a program.  Use the -shared flag with the linker to create a shared library.  To create a static library you'll have to use "rcs" or a similar tool.  On unix, something like this should work: 'find -name ./dcg_build_system/build/DEBUG/modules/MY_LIBRARY/objs/ "*" | rcs'.  
+	static and shared libraries can be created instead of a program.  Use the -shared flag with the linker to create a shared library.  To create a static library you'll have to use "rcs" or a similar tool.  On Unix-like systems, something like this should work: 'find dcg_build_system/build/DEBUG/modules/MAIN/objs/ -name "*" | ar rcs my_library.a'.
 
 
 5.  Under the Hood
