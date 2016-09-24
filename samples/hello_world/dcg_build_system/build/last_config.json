@@ -1,0 +1,43 @@
+{
+	"configurations": {
+		"DEBUG": {
+			"toolset": "GCC",
+			"bin": {
+				"bin_name": "program.exc",
+				"cc": "g++",
+				"lflags": [],
+				"lib_directories": [
+				],
+				"libs": []
+			},
+			"modules": {
+				"MAIN": {
+					"cc": "g++",
+					"cflags": [],
+					"pch": [],
+					"include_directories": {
+						"include_directories": [
+						],
+						"include_directories_recursive": [
+						]
+					},
+					"src": {
+						"src": [
+							"main.cpp"
+						],
+						"search": {
+							"directories": [
+							],
+							"directories_recursive": [],
+							"filetypes": [
+								"c",
+								"cpp",
+								"cxx"
+							]
+						}
+					}
+				}
+			}
+		}
+	}
+}

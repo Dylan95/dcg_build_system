@@ -1,0 +1,56 @@
+{
+	"configurations": {
+		"DEBUG": {
+			"toolset": "GCC",
+			"bin": {
+				"bin_name": "program.exc",
+				"cc": "g++",
+				"lflags": [],
+				"lib_directories": [
+				],
+				"libs": []
+			},
+			"modules": {
+				"MAIN": {
+					"cc": "g++",
+					"cflags": [],
+					"pch": [
+						{
+							"src": "src/s0.cpp",
+							"pch": "pch/s0_pch.hpp"
+						},
+						{
+							"src": "src/s1.cpp",
+							"pch": "pch/general_pch.hpp"
+						},
+						{
+							"src": "src/s2.cpp",
+							"pch": "pch/general_pch.hpp"
+						}
+					],
+					"include_directories": {
+						"include_directories": [
+							"pch"
+						],
+						"include_directories_recursive": [
+						]
+					},
+					"src": {
+						"src": [],
+						"search": {
+							"directories": [
+								"src"
+							],
+							"directories_recursive": [],
+							"filetypes": [
+								"c",
+								"cpp",
+								"cxx"
+							]
+						}
+					}
+				}
+			}
+		}
+	}
+}

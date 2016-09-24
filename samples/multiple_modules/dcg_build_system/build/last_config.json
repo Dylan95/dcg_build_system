@@ -1,0 +1,96 @@
+{
+	"configurations": {
+		"DEBUG": {
+			"toolset": "GCC",
+			"bin": {
+				"bin_name": "program.exc",
+				"cc": "g++",
+				"lflags": [],
+				"lib_directories": [
+					"libs"
+				],
+				"libs": []
+			},
+			"modules": {
+				"MAIN": {
+					"cc": "g++",
+					"cflags": [],
+					"pch": [],
+					"include_directories": {
+						"include_directories": [
+						],
+						"include_directories_recursive": [
+						]
+					},
+					"src": {
+						"src": [
+						],
+						"search": {
+							"directories": [
+								"main/src"
+							],
+							"directories_recursive": [],
+							"filetypes": [
+								"c",
+								"cpp",
+								"cxx"
+							]
+						}
+					}
+				},
+				"GRAPHICS": {
+					"cc": "g++",
+					"cflags": [],
+					"pch": [],
+					"include_directories": {
+						"include_directories": [
+						],
+						"include_directories_recursive": [
+						]
+					},
+					"src": {
+						"src": [
+						],
+						"search": {
+							"directories": [
+								"graphics/src"
+							],
+							"directories_recursive": [],
+							"filetypes": [
+								"c",
+								"cpp",
+								"cxx"
+							]
+						}
+					}
+				},
+				"MATH": {
+					"cc": "g++",
+					"cflags": [],
+					"pch": [],
+					"include_directories": {
+						"include_directories": [
+						],
+						"include_directories_recursive": [
+						]
+					},
+					"src": {
+						"src": [
+						],
+						"search": {
+							"directories": [
+								"math/src"
+							],
+							"directories_recursive": [],
+							"filetypes": [
+								"c",
+								"cpp",
+								"cxx"
+							]
+						}
+					}
+				}
+			}
+		}
+	}
+}
