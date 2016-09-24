@@ -43,7 +43,7 @@ def main():
 	perf = Perf()
 	timeStart = timeit.default_timer()
 	#
-	str_usage = "usage: [-build | -clean] [config_name] [module_name]"
+	str_usage = "usage: (-build | -clean) [config_name] [module_name]"
 	#
 	#verify python version:
 	if(sys.version_info[0] != 3):
