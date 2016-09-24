@@ -20,7 +20,7 @@ Table of Contents:
 
 
 4.  Usage
-	run the script "dcg_build_system/scripts/buildSys.py" located in your project directory to build and clean the project.  Configure the project by modifying the ".txt" files located in "dcg_build_system/config/".
+	run the script "dcg_build_system/scripts/buildSys.py" located in your project directory to build and clean the project.  Run the command without any extra arguments to get a usage message.
 
 	there are six things you can do with the build system:
 		1.  clean everything
@@ -30,17 +30,16 @@ Table of Contents:
 		5.  build a specific configuration
 		6.  build a specific module in a specific configuration
 
-	Configuration file:
-		"dcg_build_system/config.json" 
-			Modify this file to configure the build system.  It tells it where to look for source files, compiler and linker flags, and other such information.  
-			It supports multiple configurations.  Which is usefull if you want a debug version that generates debug information but reduces performance, and a release version that maximizes performance.
-			It supports multiple modules, which is usefull for large projects which often are broken into smaller libraries which individual programmers work on.  To add a module, copy and paste the empty module "EMPTY" in "install/dcg_build_system/config.json" into your config file, into the "modules" object.  Then configure it as you see fit.  You may want to keep a "module.json" right with the module, and copy and paste it into the "config.json" for any project you wish to use it with.  Logically, a module is a group of source files that are compiled using the same settings.
+	Configuration file: "dcg_build_system/config.json" 
+		Modify this file to configure the build system.  It tells it where to look for source files, compiler and linker flags, and other such information.  
+		It supports multiple configurations.  Which is usefull if you want a debug version that generates debug information but reduces performance, and a release version that maximizes performance.
+		It supports multiple modules, which is usefull for large projects which often are broken into smaller libraries which individual programmers work on.  To add a module, copy and paste the empty module "EMPTY" in "install/dcg_build_system/config.json" into your config file, into the "modules" object.  Then configure it as you see fit.  You may want to keep a "module.json" right with the module, and copy and paste it into the "config.json" for any project you wish to use it with.  Logically, a module is a group of source files that are compiled using the same settings.
 
-		static and shared libraries can be created instead of a program.  Use the -shared flag with the linker to create a shared library.  To create a static library you'll have to use "rcs" or a similar tool.  On unix, something like this should work: 'find -name ./dcg_build_system/build/DEBUG/modules/MY_LIBRARY/objs/ "*" | rcs'.  
+	static and shared libraries can be created instead of a program.  Use the -shared flag with the linker to create a shared library.  To create a static library you'll have to use "rcs" or a similar tool.  On unix, something like this should work: 'find -name ./dcg_build_system/build/DEBUG/modules/MY_LIBRARY/objs/ "*" | rcs'.  
 
 
 5.  Under the Hood
-	I tried to make the build system as simple as I could.  in the scripts folder: "target/Target.py" is a class that represents one build target, it does a similar thing as a makefile: it checks to see if the dependances for the target are out of date, and then builds the dependancies and the target if nessecary.  In "util/Util.py" there's nothing special, just a lot of convenience functions.  in "project/" there's the files that parse the "config.json" file and setup build targets.  And in "cpp/*.py" there's all the classes of c++ targets.  In "cpp/toolsets/" there's the interface for the compiler and linker, so far the only toolset supported is "GCC", if you want to add more: implement "Linker" and "Compiler" for the particular toolset, and then modify "Toolset.py" to check for that toolset.
+	I tried to make the build system as simple as I could.  It finds the project directory by using the python "__file__" variable to get the directory of the directory of the directory of "buildSys.py" file.  So it doesn't matter what your current directory is when you run the command.  In the scripts folder: "target/Target.py" is a class that represents one build target, it does a similar thing as a makefile: it checks to see if the dependances for the target are out of date, and then builds the dependancies and the target if nessecary.  In "util/Util.py" there's nothing special, just a lot of convenience functions.  in "project/" there's the files that parse the "config.json" file and setup build targets.  And in "cpp/*.py" there's all the classes of c++ targets.  In "cpp/toolsets/" there's the interface for the compiler and linker, so far the only toolset supported is "GCC", if you want to add more: implement "Linker" and "Compiler" for the particular toolset, and then modify "Toolset.py" to check for that toolset.
 
 
 6.  Legal
