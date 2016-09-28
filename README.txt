@@ -12,7 +12,8 @@ Table of Contents:
 
 
 2.  Dependancies
-	The only dependancy is Python version 3.  If you try to use it with an earlier version of python, it will not work.
+	1.  Python version 3.  If you try to use it with an earlier version of python, it will not work.
+	2.  A Compiler and Linker.  Currently only gcc/g++ is supported.
 
 
 3.  Installation
@@ -32,7 +33,7 @@ Table of Contents:
 
 	Configuration file: "dcg_build_system/config.json"
 		If you get an error that looks something like "Expecting , line ... column ...".  Then you probably have a badly formatted "config.json" file.  Look at the line and column specified to see if you forgot a comma, quotes, or have an extra comma, or something like that.
-		Modify this file to configure the build system.  It tells it where to look for source files, compiler and linker flags, and other such information.  For all path names, if you want them to work cross-platform, such as for local directories, use Unix-like path names."
+		Modify this file to configure the build system.  It tells it where to look for source files, compiler and linker flags, and other such information.  For all path names, if you want them to work cross-platform, such as for local directories, then use Unix-like path names.
 		It supports multiple configurations.  Which is usefull if you want a debug version that generates debug information but reduces performance, and a release version that maximizes performance.
 		It supports multiple modules, which is usefull for large projects which often are broken into smaller libraries which individual programmers work on.  To add a module, copy and paste the empty module "MAIN" in "install/dcg_build_system/config.json" into your config file, into the "modules" object.  Then configure it as you see fit.  You may want to keep a "module.json" right with the module, and copy and paste it into the "config.json" for any project you wish to use it with.  Logically, a module is a group of source files that are compiled using the same settings.
 
