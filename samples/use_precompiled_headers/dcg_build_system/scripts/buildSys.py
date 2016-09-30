@@ -34,21 +34,22 @@ from project.Logs import *
 str_buildSysDir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 str_projectDir = os.path.dirname(str_buildSysDir)
 #
-str_buildDir = os.path.join(str_buildSysDir, "build/")
+str_buildDir = os.path.join(str_buildSysDir, "build")
+str_logsDir = os.path.join(str_buildSysDir, "logs")
 #
 rootNode = json.loads(Util.str_readFile(
 	os.path.join(str_buildSysDir, "config.json")
 ))
 
 def main():
+	if not os.path.exists(str_buildDir):
+		os.makedirs(str_buildDir)
+	if not os.path.exists(str_logsDir):
+		os.makedirs(str_logsDir)
+	#
 	perf = Perf()
 	timeStart = timeit.default_timer()
-	logs = Logs(
-		os.path.join(
-			str_buildSysDir,
-			"logs"
-		)
-	)
+	logs = Logs(str_logsDir)
 	logs.start()
 	#
 	parseArgs(perf)
