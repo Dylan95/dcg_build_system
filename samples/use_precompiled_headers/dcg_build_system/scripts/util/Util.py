@@ -13,6 +13,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 import io
 import os
+import subprocess
+import sys
 
 class Util:
 	
@@ -131,9 +133,65 @@ class Util:
 			str_write += str_write + "\n"
 		Util.writeFile_str(str_filename, str_write)
 
+	#
 
 
 
+
+
+
+
+	#return: return code of process
+	#prints the stderr and stdout from the subprocess to
+	#sys.stderr and sys.stdout respectivly.
+	#using sys.stderr and sys.stdout directly doesn't seem to work.
+	def exec(str_command):
+		proc = subprocess.Popen(
+			str_command, 
+			shell=True,
+			stdout=subprocess.PIPE,
+			stderr=subprocess.PIPE
+		)
+		proc.wait()
+		#
+		out, err = proc.communicate()
+		sys.stdout.write(out.decode(sys.getdefaultencoding()))
+		sys.stderr.write(err.decode(sys.getdefaultencoding()))
+		#
+		return(proc.returncode)
+
+
+
+
+
+
+
+
+
+
+"""
+	#return: return code of process
+	#def exec(str_command, tempOut, tempErr):
+	def exec(str_command):
+		proc = subprocess.Popen(
+			str_command, 
+			shell=True,
+			#stdout=subprocess.PIPE,
+			#stderr=subprocess.PIPE
+			#stdout=sys.stderr,
+			stdout=sys.stdout,
+			stderr=sys.stderr
+		)
+		proc.wait()
+		#
+		#out, err = proc.communicate()
+		#sys.stdout.write(out.decode())
+		#sys.stdout.write(proc.stdout.read())
+		#sys.stderr.write(proc.stderr.read())
+		#
+		return(proc.returncode)
+
+"""
 
 
 

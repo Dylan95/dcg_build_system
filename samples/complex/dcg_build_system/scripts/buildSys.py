@@ -23,6 +23,7 @@ from util.Util import *
 from project.Module import *
 from project.Config import *
 from project.Perf import *
+from project.Logs import *
 
 #import cpp.Target_Bin
 #import cpp.Target_Obj
@@ -42,7 +43,21 @@ rootNode = json.loads(Util.str_readFile(
 def main():
 	perf = Perf()
 	timeStart = timeit.default_timer()
+	logs = Logs(
+		os.path.join(
+			str_buildSysDir,
+			"logs"
+		)
+	)
+	logs.start()
 	#
+	parseArgs(perf)
+	#
+	perf.totalT = timeit.default_timer() - timeStart
+	perf.print()
+	logs.end()
+
+def parseArgs(perf):
 	str_usage = "usage: (-build | -clean) [config_name] [module_name]"
 	#
 	#verify python version:
@@ -80,9 +95,6 @@ def main():
 			print(str_usage)
 	else:
 		print(str_usage)
-	#
-	perf.totalT = timeit.default_timer() - timeStart
-	perf.print()
 
 def make(perf):
 	for str_configKey in rootNode["configurations"]:
@@ -185,11 +197,7 @@ def _checkLastBuild_module(lastRoot, str_configKey, str_moduleKey):
 		print("a")
 		cleanModule(str_configKey, str_moduleKey)
 
-#
 
 main()
-
-
-
 
 
