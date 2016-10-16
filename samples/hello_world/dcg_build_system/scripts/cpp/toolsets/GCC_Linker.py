@@ -16,7 +16,6 @@ import sys
 import timeit
 
 from .Linker import *
-from util.Util import *
 
 class GCC_Linker(Linker):
 
@@ -56,11 +55,11 @@ class GCC_Linker(Linker):
 	def _exec(self, str_description, str_command):
 		print(str_description + ":\n" + str_command + "\n\n")
 		tStart = timeit.default_timer()
-		returnCode = Util.exec(str_command)
+		exitCode = os.system(str_command);
 		tEnd = timeit.default_timer()
 		#
-		if(returnCode != 0):
-			print("makeSys: fatal error: the last command returned: " + str(returnCode))
+		if(exitCode != 0):
+			print("makeSys: fatal error: the last command returned: " + str(exitCode))
 			sys.exit(1)
 		return(tEnd - tStart)
 

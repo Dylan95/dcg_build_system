@@ -46,7 +46,7 @@ class Util:
 		lst = []
 		for dirname, subdirs, subfiles in os.walk(str_dir):
 			for subfile in subfiles:
-				lst.append(subfile)
+				lst.append(os.path.join(dirname, subfile))
 		return lst
 
 	@staticmethod

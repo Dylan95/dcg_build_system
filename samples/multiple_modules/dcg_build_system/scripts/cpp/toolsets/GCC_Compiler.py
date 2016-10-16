@@ -147,3 +147,25 @@ class GCC_Compiler(cpp.toolsets.Compiler.Compiler):
 		return results
 
 
+
+
+
+
+"""
+
+	#returns: time to execute the command
+	def _exec(self, str_description, str_command):
+		print(str_description + ":\n" + str_command + "\n\n")
+		tStart = timeit.default_timer()
+		exitCode = os.system(str_command);
+		tEnd = timeit.default_timer()
+		#
+		if(exitCode != 0):
+			print("makeSys: fatal error: the last command returned: " + str(exitCode))
+			#sys.exit(1)
+		return(tEnd - tStart)
+
+
+"""
+
+
