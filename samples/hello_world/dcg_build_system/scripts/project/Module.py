@@ -57,12 +57,9 @@ class Module:
 			dict_pch[str_src] = str_pch
 		#
 		for str_src in info.lst_str_src:
-			print("str_src: " + str_src)
-			#
 			target_src = LeafTarget(str_src)
 			str_srcRel = Util.absToRel(str_src)
 			#
-			print("os.path.splitext: " + os.path.splitext(str_srcRel)[0] + ".d")
 			obj = Target_Obj(
 				os.path.join(
 					STR_DIR_OBJS,

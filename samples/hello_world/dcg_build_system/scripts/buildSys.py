@@ -115,42 +115,50 @@ def makeConfig(str_configKey, perf):
 
 def makeModule(str_configKey, str_moduleKey, perf):
 	module = Module(
-		rootNode["configurations"][str_configKey][str_moduleKey],
+		rootNode["configurations"][str_configKey]["modules"][str_moduleKey],
 		os.path.join(
 			str_buildDir, 
 			str_configKey, 
 			"modules", 
-			str_moduleKey,
+			str_moduleKey
 		),
 		str_projectDir,
+		Toolset(rootNode["configurations"][str_configKey]["toolset"]),
 		perf
 	)
-	module.precompileHeaders()
 	for obj in module.lst_target_objs:
 		obj.make()
 
 def clean():
-	shutil.rmtree(str_buildDir)
-	os.mkdir(str_buildDir)
+	if os.path.exists(str_buildDir):
+		shutil.rmtree(str_buildDir)
+		os.mkdir(str_buildDir)
 
 def cleanConfig(str_configName):
-	shutil.rmtree(os.path.join(
+	str_path = os.path.join(
 		str_buildDir, 
 		str_configName
-	))
+	)
+	if os.path.exists(str_path):
+		shutil.rmtree(str_path)
 
 def cleanModule(str_configName, str_moduleName):
-	shutil.rmtree(os.path.join(
+	str_path = os.path.join(
 		str_buildDir, 
 		str_configName, 
 		"modules", 
 		str_moduleName
-	))
+	)
+	if os.path.exists(str_path):
+		shutil.rmtree(str_path)
 
 #
 
 #checks the configuration for the last build to see if any changes in the
 #configuration file have occured that require part or all of the last build.
+#it would be simpler just to rebuild everything when the configuration file changes,
+#but I don't want it to be nessecary to rebuild a massive project with many 
+#modules just because a setting in one particular module was changed.
 def _checkLastBuild():
 	str_lastConfigPath = os.path.join(str_buildDir, "last_config.json")
 	if(os.path.exists(str_lastConfigPath)):
@@ -161,7 +169,10 @@ def _checkLastBuild():
 		clean()
 
 def _checkLastBuild_config(lastRoot, str_configKey):
-	if(str_configKey in rootNode["configurations"]):
+	if(
+		(str_configKey in rootNode["configurations"]) and 
+		(str_configKey in lastRoot["configurations"])
+	):
 		thisBin = rootNode["configurations"][str_configKey]["bin"]
 		lastBin = lastRoot["configurations"][str_configKey]["bin"]
 		if(
@@ -182,7 +193,10 @@ def _checkLastBuild_config(lastRoot, str_configKey):
 		cleanConfig(str_configKey)
 
 def _checkLastBuild_module(lastRoot, str_configKey, str_moduleKey):
-	if(str_moduleKey in rootNode["configurations"][str_configKey]["modules"]):
+	if(
+		(str_moduleKey in rootNode["configurations"][str_configKey]["modules"]) and 
+		(str_moduleKey in lastRoot["configurations"][str_configKey]["modules"])
+	):
 		lastModule = lastRoot["configurations"][str_configKey]["modules"][str_moduleKey]
 		thisModule = rootNode["configurations"][str_configKey]["modules"][str_moduleKey]
 		#"src" is the one setting that doesn't require
@@ -195,8 +209,8 @@ def _checkLastBuild_module(lastRoot, str_configKey, str_moduleKey):
 		):
 			cleanModule(str_configKey, str_moduleKey)
 	else:
-		print("a")
 		cleanModule(str_configKey, str_moduleKey)
+
 
 
 main()
