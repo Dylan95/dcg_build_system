@@ -135,6 +135,7 @@ def clean():
 		os.mkdir(str_buildDir)
 
 def cleanConfig(str_configName):
+	print("clean config")
 	str_path = os.path.join(
 		str_buildDir, 
 		str_configName
@@ -143,11 +144,22 @@ def cleanConfig(str_configName):
 		shutil.rmtree(str_path)
 
 def cleanModule(str_configName, str_moduleName):
+	print("clean module")
 	str_path = os.path.join(
 		str_buildDir, 
 		str_configName, 
 		"modules", 
 		str_moduleName
+	)
+	if os.path.exists(str_path):
+		shutil.rmtree(str_path)
+
+def cleanBin(str_configName):
+	print("clean bin")
+	str_path = os.path.join(
+		str_buildDir, 
+		str_configName, 
+		"bin"
 	)
 	if os.path.exists(str_path):
 		shutil.rmtree(str_path)
@@ -182,7 +194,7 @@ def _checkLastBuild_config(lastRoot, str_configKey):
 			(thisBin["lib_directories"] != 	lastBin["lib_directories"]) or
 			(thisBin["libs"] != 			lastBin["libs"])
 		):
-			cleanConfig(str_configKey)
+			cleanBin(str_configKey)
 		for str_moduleKey in rootNode["configurations"][str_configKey]["modules"]:
 			_checkLastBuild_module(lastRoot, str_configKey, str_moduleKey)
 	else:
