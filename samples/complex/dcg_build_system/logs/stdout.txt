@@ -1,7 +1,6 @@
-usage: (-build | -clean) [config_name] [module_name]
-total time:                    0.015341360999627796
+total time:                    0.0010008899998865672
 time to make dependancy files: 0
 time to compile source:        0
 time to precompile headers:    0
 time to link:                  0
-misc time:                     0.015341360999627796
+misc time:                     0.0010008899998865672

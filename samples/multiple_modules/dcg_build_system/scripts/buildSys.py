@@ -182,11 +182,7 @@ def _checkLastBuild_config(lastRoot, str_configKey):
 			(thisBin["lib_directories"] != 	lastBin["lib_directories"]) or
 			(thisBin["libs"] != 			lastBin["libs"])
 		):
-			shutil.rmtree(os.path.join(
-				str_buildDir, 
-				str_configKey, 
-				"bin"
-			))
+			cleanConfig(str_configKey)
 		for str_moduleKey in rootNode["configurations"][str_configKey]["modules"]:
 			_checkLastBuild_module(lastRoot, str_configKey, str_moduleKey)
 	else:
