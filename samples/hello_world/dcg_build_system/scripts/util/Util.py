@@ -130,7 +130,7 @@ class Util:
 	def writeFile_lst(str_filename, lst_str):
 		str_write = ""
 		for string in lst_str:
-			str_write += str_write + "\n"
+			str_write += string + "\n"
 		Util.writeFile_str(str_filename, str_write)
 
 	#

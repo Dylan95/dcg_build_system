@@ -1,0 +1,7 @@
+/home/dylan/pyProjects/dcg_build_system/samples/complex/include
+/home/dylan/pyProjects/dcg_build_system/samples/complex/include/include2
+/home/dylan/pyProjects/dcg_build_system/samples/complex/include_recursive
+/home/dylan/pyProjects/dcg_build_system/samples/complex/include_recursive/_util
+/home/dylan/pyProjects/dcg_build_system/samples/complex/include_recursive/_math
+/home/dylan/pyProjects/dcg_build_system/samples/complex/include_recursive/_graphics
+/home/dylan/pyProjects/dcg_build_system/samples/complex/include_recursive/_graphics/_window

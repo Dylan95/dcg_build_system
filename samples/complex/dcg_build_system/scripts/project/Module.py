@@ -138,11 +138,11 @@ class Module:
 				os.makedirs(os.path.dirname(str_srcList))
 			#
 			Util.writeFile_lst(
-				str_includeList,
+				str_srcList,
 				self.lst_str_src
 			)
 			Util.writeFile_lst(
-				str_srcList,
+				str_includeList,
 				self.lst_str_includeDirs
 			)
 		#
