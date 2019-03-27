@@ -152,7 +152,11 @@ class Util:
 			stdout=subprocess.PIPE,
 			stderr=subprocess.PIPE
 		)
-		proc.wait()
+		#
+		#nessecary to do this (instead of just proc.wait()) to prevent hanging on large amount of output
+		while(proc.poll() != None):
+			proc.communicate()
+			time.sleep(.1)
 		#
 		out, err = proc.communicate()
 		sys.stdout.write(out.decode(sys.getdefaultencoding()))
