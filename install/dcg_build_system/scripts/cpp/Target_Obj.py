@@ -18,26 +18,28 @@ from target.Target import *
 
 class Target_Obj(Target):
 
-	def __init__(self, str_obj, target_src, lst_target_headers, compiler, target_pch = None):
+	def __init__(self, str_obj, target_src, lst_target_headers, compiler, perf, target_pch = None):
 		self.target_pch = target_pch
 		self.compiler = compiler
 		#
 		if(target_pch == None):
-			super().__init__(str_obj, [target_src] + lst_target_headers)
+			super().__init__(str_obj, [target_src] + lst_target_headers, perf)
 		else:
-			super().__init__(str_obj, [target_src] + [target_pch] + lst_target_headers)
+			super().__init__(str_obj, [target_src] + [target_pch] + lst_target_headers, perf)
 
-	def rule(self):
+	def rule(self, TargetThreadData_data):
 		if(self.target_pch == None):
 			self.compiler.compile(
 				self.str_target, 
-				self.lst_target_deps[0].str_target
+				self.lst_target_deps[0].str_target,
+				TargetThreadData_data
 			)
 		else:
 			self.compiler.compileWithPCH(
 				self.str_target, 
 				self.lst_target_deps[0].str_target, 
-				self.lst_target_deps[1].str_target
+				self.lst_target_deps[1].str_target,
+				TargetThreadData_data
 			)
 
 

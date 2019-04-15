@@ -46,8 +46,7 @@ class Module:
 			nodeModule["cc"],
 			nodeModule["cflags"],
 			info.lst_str_includeDirs,
-			STR_DIR_PCH,
-			perf
+			STR_DIR_PCH
 		)
 		#
 		dict_pch = {}
@@ -71,14 +70,17 @@ class Module:
 						STR_DIR_OBJ_DEPS,
 						os.path.splitext(str_srcRel)[0] + ".d"
 					),
-					target_src
+					target_src,
+					perf
 				),
 				self.compiler,
+				perf,
 				self._target_pch(
 					dict_pch, 
 					STR_DIR_PCH,
 					STR_DIR_PCH_DEPS,
-					str_src
+					str_src,
+					perf
 				)
 			)
 			#
@@ -86,7 +88,7 @@ class Module:
 
 	#
 
-	def _target_pch(self, dict_pch, str_pchDir, str_depDir, str_src):
+	def _target_pch(self, dict_pch, str_pchDir, str_depDir, str_src, perf):
 		if(str_src in dict_pch):
 			target_pchHeader = LeafTarget(dict_pch[str_src])
 			str_headerRel = Util.absToRel(target_pchHeader.str_target)
@@ -102,22 +104,25 @@ class Module:
 						str_depDir,
 						os.path.splitext(str_headerRel)[0] + ".d"
 					),
-					target_pchHeader
+					target_pchHeader,
+					perf
 				),
-				self.compiler
+				self.compiler,
+				perf
 			)
 			return result
 		else:
 			return None
 
 	#makes a DFile and returns the contents
-	def _lst_target_makeDFile(self, str_dFile, target_file):
+	def _lst_target_makeDFile(self, str_dFile, target_file, perf):
 		dFile = Target_DFile(
 			str_dFile,
 			target_file, 
-			self.compiler
+			self.compiler,
+			perf
 		)
-		dFile.make()
+		dFile.makeRec()
 		return dFile.lst_target_getTargets()
 
 	#

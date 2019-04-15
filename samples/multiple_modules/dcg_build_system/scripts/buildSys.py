@@ -126,8 +126,7 @@ def makeModule(str_configKey, str_moduleKey, perf):
 		Toolset(rootNode["configurations"][str_configKey]["toolset"]),
 		perf
 	)
-	for obj in module.lst_target_objs:
-		obj.make()
+	PhonyTarget(module.lst_target_objs, perf).makeRec()
 
 def clean():
 	if os.path.exists(str_buildDir):

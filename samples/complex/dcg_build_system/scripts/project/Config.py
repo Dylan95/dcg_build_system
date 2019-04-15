@@ -54,7 +54,7 @@ class Config:
 		)
 
 	def build(self):
-		self.bin.make()
+		self.bin.makeRec()
 
 	#
 

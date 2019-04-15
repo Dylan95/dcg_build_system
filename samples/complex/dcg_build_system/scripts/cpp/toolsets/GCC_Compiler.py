@@ -10,12 +10,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 '''
 
-
 import os
 import re
 import sys
 import timeit
 import subprocess
+import _thread
 
 import cpp
 
@@ -34,23 +34,21 @@ class GCC_Compiler(cpp.toolsets.Compiler.Compiler):
 		str_cc,
 		lst_str_cflags,
 		lst_str_includeDirs,
-		str_pchBuildDir,
-		perf
+		str_pchBuildDir
 	):
 		self.str_cc = str_cc
 		self.lst_str_cflags = lst_str_cflags
 		self.lst_str_includeDirs = lst_str_includeDirs
 		self.str_pchBuildDir = str_pchBuildDir
-		self.perf = perf
 
-	def compile(self, str_obj, str_src):
-		self.perf.compileSrcT += self._compile("compile command", str_obj, str_src)
+	def compile(self, str_obj, str_src, TargetThreadData_data):
+		TargetThreadData_data.perf.compileSrcT += self._compile("compile command", str_obj, str_src)
 
-	def compilePCH(self, str_pch, str_header):
-		self.perf.compilePchT += self._compile("precompile header command", str_pch, str_header)
+	def compilePCH(self, str_pch, str_header, TargetThreadData_data):
+		TargetThreadData_data.perf.compilePchT += self._compile("precompile header command", str_pch, str_header)
 
-	def makeDFile(self, str_dFile, str_file):
-		self.perf.makeDFileT += self._exec(
+	def makeDFile(self, str_dFile, str_file, TargetThreadData_data):
+		TargetThreadData_data.perf.makeDFileT += self._exec(
 			"make d file command",
 			str(
 				self.str_cc + " " + 
@@ -68,13 +66,13 @@ class GCC_Compiler(cpp.toolsets.Compiler.Compiler):
 		Util.writeFile_str(str_dFile, str_write)
 
 
-	def compileWithPCH(self, str_obj, str_src, str_pch):
+	def compileWithPCH(self, str_obj, str_src, str_pch, TargetThreadData_data):
 		lst_str_pchIncludeDirs = []
 		for str_includeDir in self.lst_str_includeDirs:
 			str_includeDirRel = Util.absToRel(str_includeDir)
 			lst_str_pchIncludeDirs.append(os.path.join(self.str_pchBuildDir, str_includeDirRel))
 		#
-		self.perf.compileSrcT += self._exec(
+		TargetThreadData_data.perf.compileSrcT += self._exec(
 			"compile with pch command",
 			str(
 				self.str_cc + " " + 
@@ -118,7 +116,11 @@ class GCC_Compiler(cpp.toolsets.Compiler.Compiler):
 		#
 		if(returnCode != 0):
 			print("makeSys: fatal error: the last command returned: " + str(returnCode))
-			sys.exit(1)
+			#_thread.interrupt_main();
+			#os._exit(1) #nessecary to kill all threads, not just the current one
+			#sys.exit(1)
+			#todo: find a way to exit all threads properly, cause this is dumb
+			this_code_will_crash_on_purpose_because_exit_doesnt_work_w_multi_threads
 		return(tEnd - tStart)
 
 	#

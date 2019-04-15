@@ -15,16 +15,16 @@ from target.Target import *
 
 class Target_Bin(Target):
 
-	def __init__(self, str_bin, lst_target_objs, linker):
+	def __init__(self, str_bin, lst_target_objs, linker, perf):
 		self.linker = linker
 		self.lst_target_objs = lst_target_objs[:]
 		#
-		super().__init__(str_bin, lst_target_objs)
+		super().__init__(str_bin, lst_target_objs, perf)
 
-	def rule(self):
+	def rule(self, TargetThreadData_data):
 		lst_str_objs = []
 		for o in self.lst_target_objs:
 			lst_str_objs.append(o.str_target)
-		self.linker.link(self.str_target, lst_str_objs)
+		self.linker.link(self.str_target, lst_str_objs, TargetThreadData_data)
 
 

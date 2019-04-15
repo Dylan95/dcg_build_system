@@ -15,6 +15,8 @@ import io
 import os
 import subprocess
 import sys
+import tempfile
+import time
 
 class Util:
 	
@@ -121,7 +123,7 @@ class Util:
 	#write string to file
 	@staticmethod
 	def writeFile_str(str_filename, string):
-		file = open(str_filename, 'w')
+		file = open(str_filename, 'w+')
 		file.write(string)
 		file.close()
 
@@ -153,7 +155,7 @@ class Util:
 			stderr=subprocess.PIPE
 		)
 		#
-		#nessecary to do this (instead of just proc.wait()) to prevent hanging on large amount of output
+		#nessecary to do this instead of proc.wait() to prevent hanging on large amount of output
 		while(proc.poll() != None):
 			proc.communicate()
 			time.sleep(.1)

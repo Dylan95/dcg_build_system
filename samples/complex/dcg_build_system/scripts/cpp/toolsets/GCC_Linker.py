@@ -25,18 +25,15 @@ class GCC_Linker(Linker):
 		str_cc,
 		lst_str_lflags,
 		lst_str_libDirs,
-		lst_str_libs,
-		perf
+		lst_str_libs
 	):
 		self.str_cc = str_cc
 		self.lst_str_lflags = lst_str_lflags
 		self.lst_str_libDirs = lst_str_libDirs
 		self.lst_str_libs = lst_str_libs
-		#
-		self.perf = perf
 
-	def link(self, str_bin, lst_str_objs):
-		self.perf.linkT += self._exec(
+	def link(self, str_bin, lst_str_objs, TargetThreadData_data):
+		TargetThreadData_data.perf.linkT += self._exec(
 			"link command",
 			str(
 				self.str_cc + " " + 

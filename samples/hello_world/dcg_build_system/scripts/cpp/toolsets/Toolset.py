@@ -29,17 +29,17 @@ class Toolset:
 			print("buildSys: fatal error: unrecognized toolset: \"" + str_toolset + "\"")
 			sys.exit(4)
 
-	def makeCompiler(self, str_cc, lst_str_cflags, lst_str_includeDirs, str_pchBuildDir, perf):
+	def makeCompiler(self, str_cc, lst_str_cflags, lst_str_includeDirs, str_pchBuildDir):
 		result = self.CompilerType()
 		result.init(
-			str_cc, lst_str_cflags, lst_str_includeDirs, str_pchBuildDir, perf
+			str_cc, lst_str_cflags, lst_str_includeDirs, str_pchBuildDir
 		)
 		return result
 
-	def makeLinker(self, str_cc, lst_str_lflags, lst_str_libDirs, lst_str_libs, perf):
+	def makeLinker(self, str_cc, lst_str_lflags, lst_str_libDirs, lst_str_libs):
 		result = self.LinkerType()
 		result.init(
-			str_cc, lst_str_lflags, lst_str_libDirs, lst_str_libs, perf
+			str_cc, lst_str_lflags, lst_str_libDirs, lst_str_libs
 		)
 		return result
 

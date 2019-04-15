@@ -18,25 +18,24 @@ class Compiler:
 		str_cc,
 		lst_str_cflags,
 		lst_str_includeDirs,
-		str_pchBuildDir,
-		perf
+		str_pchBuildDir
 	):
 		assert(False)
 
 	#implement
-	def compile(self, str_obj, str_src):
+	def compile(self, str_obj, str_src, TargetThreadData_data):
 		assert(False)
 
 	#implement
-	def compilePCH(self, str_pch, str_header):
+	def compilePCH(self, str_pch, str_header, TargetThreadData_data):
 		assert(False)
 
 	#implement
-	def compileWithPCH(self, str_obj, str_src, str_pch):
+	def compileWithPCH(self, str_obj, str_src, str_pch, TargetThreadData_data):
 		assert(False)
 		
 	#implement
-	def makeDFile(self, str_dFile, str_src):
+	def makeDFile(self, str_dFile, str_src, TargetThreadData_data):
 		assert(False)
 
 	def str_objName(self, str_srcName):

@@ -15,14 +15,15 @@ from target.Target import *
 
 class Target_PCH(Target):
 
-	def __init__(self, str_pch, target_header, lst_target_headers, compiler):
+	def __init__(self, str_pch, target_header, lst_target_headers, compiler, perf):
 		self.compiler = compiler
 		#
-		super().__init__(str_pch, [target_header] + lst_target_headers)
+		super().__init__(str_pch, [target_header] + lst_target_headers, perf)
 
-	def rule(self):
+	def rule(self, TargetThreadData_data):
 		self.compiler.compilePCH(
 			self.str_target, 
-			self.lst_target_deps[0].str_target
+			self.lst_target_deps[0].str_target,
+			TargetThreadData_data
 		)
 

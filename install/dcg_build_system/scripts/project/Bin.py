@@ -37,11 +37,10 @@ class Bin(Target_Bin):
 			nodeBin["cc"],
 			nodeBin["lflags"],
 			self._lst_str_libDirs(nodeBin, str_projectDir),
-			nodeBin["libs"],
-			perf
+			nodeBin["libs"]
 		)
 		#
-		super().__init__(str_bin, lst_target_objs, linker)
+		super().__init__(str_bin, lst_target_objs, linker, perf)
 
 	#
 

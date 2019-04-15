@@ -18,16 +18,17 @@ from cpp.toolsets.Compiler import *
 class Target_DFile(Target):
 
 	#str_cc: only gcc/g++ compilers are supported.  ex. g++, g++-6, etc.
-	def __init__(self, str_dFile, target_srcFile, compiler):
+	def __init__(self, str_dFile, target_srcFile, compiler, perf):
 		self.compiler = compiler
 		self.target_srcFile = target_srcFile
 		#
-		super().__init__(str_dFile, [target_srcFile])
+		super().__init__(str_dFile, [target_srcFile], perf)
 
-	def rule(self):
+	def rule(self, TargetThreadData_data):
 		self.compiler.makeDFile(
 			self.str_target, 
-			self.target_srcFile.str_target
+			self.target_srcFile.str_target,
+			TargetThreadData_data
 		)
 
 	def lst_target_getTargets(self):

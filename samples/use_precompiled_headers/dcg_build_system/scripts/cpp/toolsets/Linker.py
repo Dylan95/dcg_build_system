@@ -19,12 +19,11 @@ class Linker:
 		str_cc,
 		lst_str_lflags,
 		lst_str_libDirs,
-		lst_str_libs,
-		perf
+		lst_str_libs
 	):
 		assert(False)
 
 	#implement
-	def link(self, str_bin, lst_str_objs):
+	def link(self, str_bin, lst_str_objs, TargetThreadData_data):
 		assert(False)
 
