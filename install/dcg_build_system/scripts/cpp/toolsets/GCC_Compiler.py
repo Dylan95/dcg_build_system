@@ -66,18 +66,34 @@ class GCC_Compiler(cpp.toolsets.Compiler.Compiler):
 		Util.writeFile_str(str_dFile, str_write)
 
 
-	def compileWithPCH(self, str_obj, str_src, str_pch, TargetThreadData_data):
-		lst_str_pchIncludeDirs = []
-		for str_includeDir in self.lst_str_includeDirs:
-			str_includeDirRel = Util.absToRel(str_includeDir)
-			lst_str_pchIncludeDirs.append(os.path.join(self.str_pchBuildDir, str_includeDirRel))
-		#
+	def compileWithPCH(self, str_obj, str_src, str_pch, str_pchHeader, TargetThreadData_data):
+		#lst_str_pchIncludeDirs = []
+		#for str_includeDir in self.lst_str_includeDirs:
+		#	str_includeDirRel = Util.absToRel(str_includeDir)
+		#	lst_str_pchIncludeDirs.append(os.path.join(self.str_pchBuildDir, str_includeDirRel))
+		##
+		#print(str_pchHeader)
+		#print(lst_str_pchIncludeDirs)
+		#print(list(filter(
+		#	(lambda str_includeDir: (str_includeDir in str_pchHeader)),
+		#	lst_str_pchIncludeDirs
+		#)))
 		TargetThreadData_data.perf.compileSrcT += self._exec(
 			"compile with pch command",
 			str(
 				self.str_cc + " " + 
-				self._str_includeDirs(lst_str_pchIncludeDirs) + " " + 
+				self._str_includeDirs(list(map(
+					(lambda str_includeDir: os.path.join(
+						self.str_pchBuildDir,
+						Util.absToRel(str_includeDir)
+					)),
+					list(filter(
+						(lambda str_includeDir: (str_includeDir in str_pchHeader)),
+						self.lst_str_includeDirs
+					))
+				))) + " " + 
 				self._str_includeDirs(self.lst_str_includeDirs) + " " + 
+				#"-H " + #debugging, see which headers are used
 				"-c -o " + 
 				str_obj + " " + 
 				str_src + " " + 

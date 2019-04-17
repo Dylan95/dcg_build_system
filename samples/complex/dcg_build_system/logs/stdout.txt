@@ -1,7 +1,7 @@
 3 threads, times are slightly off.
-total time:                    0.0002011620017583482
+total time:                    0.0010565820011834148
 time to make dependancy files: 0.0
 time to compile source:        0.0
 time to precompile headers:    0.0
 time to link:                  0.0
-misc time:                     0.0002011620017583482
+misc time:                     0.0010565820011834148

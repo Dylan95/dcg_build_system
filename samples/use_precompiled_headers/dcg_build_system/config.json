@@ -13,7 +13,9 @@
 			"modules": {
 				"MAIN": {
 					"cc": "g++",
-					"cflags": [],
+					"cflags": [
+						"H"
+					],
 					"pch": [
 						{
 							"src": "src/s0.cpp",

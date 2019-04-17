@@ -49,15 +49,26 @@ class Module:
 			STR_DIR_PCH
 		)
 		#
+		dict_str_pchConfig = {}
 		dict_pch = {}
 		for nodePch in nodeModule["pch"]:
 			str_src = Util.str_projectPath(nodePch["src"], str_projectDir)
 			str_pch = Util.str_projectPath(nodePch["pch"], str_projectDir)
-			dict_pch[str_src] = str_pch
+			dict_str_pchConfig[str_src] = str_pch
+			dict_pch[str_src] = self._createPCH(str_pch, STR_DIR_PCH, STR_DIR_PCH_DEPS, perf)
 		#
+		lst_str_srcWherePchUsed = []
 		for str_src in info.lst_str_src:
 			target_src = LeafTarget(str_src)
 			str_srcRel = Util.absToRel(str_src)
+			#
+			pch = (
+				dict_pch[str_src] 
+				if (str_src in dict_pch) else
+				None
+			)
+			if(pch != None):
+				lst_str_srcWherePchUsed.append(str_src)
 			#
 			obj = Target_Obj(
 				os.path.join(
@@ -75,44 +86,42 @@ class Module:
 				),
 				self.compiler,
 				perf,
-				self._target_pch(
-					dict_pch, 
-					STR_DIR_PCH,
-					STR_DIR_PCH_DEPS,
-					str_src,
-					perf
-				)
+				pch
 			)
 			#
 			self.lst_target_objs.append(obj)
+		if(set(lst_str_srcWherePchUsed) != set(dict_str_pchConfig)):
+			print("pch mismatch detected: not all precompiled headers were used")
+			print("source: ")
+			print(info.lst_str_src)
+			print("map: ")
+			print(dict_str_pchConfig)
+			sys.exit(1)
 
 	#
 
-	def _target_pch(self, dict_pch, str_pchDir, str_depDir, str_src, perf):
-		if(str_src in dict_pch):
-			target_pchHeader = LeafTarget(dict_pch[str_src])
-			str_headerRel = Util.absToRel(target_pchHeader.str_target)
-			#
-			result = Target_PCH(
+	def _createPCH(self, str_pchHeader, str_pchDir, str_depDir, perf):
+		target_pchHeader = LeafTarget(str_pchHeader)
+		str_headerRel = Util.absToRel(target_pchHeader.str_target)
+		#
+		result = Target_PCH(
+			os.path.join(
+				str_pchDir, 
+				self.compiler.str_pchName(str_headerRel)
+			),
+			target_pchHeader, 
+			self._lst_target_makeDFile(
 				os.path.join(
-					str_pchDir, 
-					self.compiler.str_pchName(str_headerRel)
-				), 
-				target_pchHeader, 
-				self._lst_target_makeDFile(
-					os.path.join(
-						str_depDir,
-						os.path.splitext(str_headerRel)[0] + ".d"
-					),
-					target_pchHeader,
-					perf
+					str_depDir,
+					os.path.splitext(str_headerRel)[0] + ".d"
 				),
-				self.compiler,
+				target_pchHeader,
 				perf
-			)
-			return result
-		else:
-			return None
+			),
+			self.compiler,
+			perf
+		)
+		return result
 
 	#makes a DFile and returns the contents
 	def _lst_target_makeDFile(self, str_dFile, target_file, perf):

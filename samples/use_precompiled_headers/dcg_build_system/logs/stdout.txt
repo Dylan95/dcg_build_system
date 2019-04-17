@@ -1,34 +1,7 @@
-make d file command:
-g++ -I"/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/pch" -M /home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/src/s2.cpp  > /home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/dcg_build_system/build/DEBUG/modules/MAIN/src_deps/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/src/s2.d
-
-
-make d file command:
-g++ -I"/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/pch" -M /home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/pch/general_pch.hpp  > /home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/dcg_build_system/build/DEBUG/modules/MAIN/pch_deps/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/pch/general_pch.d
-
-
-make d file command:
-g++ -I"/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/pch" -M /home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/src/s1.cpp  > /home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/dcg_build_system/build/DEBUG/modules/MAIN/src_deps/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/src/s1.d
-
-
-make d file command:
-g++ -I"/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/pch" -M /home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/src/s0.cpp  > /home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/dcg_build_system/build/DEBUG/modules/MAIN/src_deps/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/src/s0.d
-
-
-make d file command:
-g++ -I"/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/pch" -M /home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/pch/s0_pch.hpp  > /home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/dcg_build_system/build/DEBUG/modules/MAIN/pch_deps/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/pch/s0_pch.d
-
-
-precompile header command:
-g++ -I"/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/pch" -c -o /home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/dcg_build_system/build/DEBUG/modules/MAIN/pch/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/pch/general_pch.hpp.gch /home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/pch/general_pch.hpp 
-
-
-compile with pch command:
-g++ -I"/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/dcg_build_system/build/DEBUG/modules/MAIN/pch/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/pch" -I"/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/pch" -c -o /home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/dcg_build_system/build/DEBUG/modules/MAIN/objs/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/src/s1.o /home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/src/s1.cpp 
-
-
-total time:                    0.8981300350060337
-time to make dependancy files: 0.16114771000866313
-time to compile source:        0.12856949200067902
-time to precompile headers:    1.3915428519976558
-time to link:                  0.09253318500122987
-misc time:                     -0.8756632040021941
+3 threads, times are slightly off.
+total time:                    0.00020622300144168548
+time to make dependancy files: 0.0
+time to compile source:        0.0
+time to precompile headers:    0.0
+time to link:                  0.0
+misc time:                     0.00020622300144168548

@@ -2,5 +2,7 @@
 #include "general_pch.hpp"
 
 
-int doThing1(){}
+int doThing1(){
+	return 128;
+}
 

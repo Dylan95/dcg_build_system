@@ -47,7 +47,7 @@ class Target:
 		#
 		lst_lst_target_layers = []
 		set_target_dirty = set()
-		self.b_addToBuildTree(lst_lst_target_layers, 0, set(), set_target_dirty)
+		self.b_addToBuildTree(lst_lst_target_layers, 0, set(), set(), set_target_dirty)
 		#print(lst_lst_target_layers)
 		#input()
 		#
@@ -60,6 +60,15 @@ class Target:
 					os.makedirs(os.path.dirname(target_dirty.str_target))
 		#
 		if(len(set_target_dirty) > 1):
+			#print(list(map(
+			#	lambda lst_target_layer: list(map(
+			#		(lambda target_t: target_t.str_target),
+			#		lst_target_layer
+			#	)),
+			#	lst_lst_target_layers
+			#)))
+			#input()
+			#
 			#lock = threading.Lock() #broken
 			lst_lst_TargetThreadData_layers = list(map(
 				lambda lst_target_layer: list(map(
@@ -106,25 +115,26 @@ class Target:
 	#price to pay for keeping things in order.  Also this way makes the code easier.
 	#
 	#returns whether it's dirty or not
-	def b_addToBuildTree(self, lst_lst_target_layers, int_layer, set_target_traversed, set_target_dirty):
-		if(self in set_target_dirty):
+	def b_addToBuildTree(self, lst_lst_target_layers, int_layer, set_str_traversed, set_str_dirty, set_target_dirty):
+		if(self.str_target in set_str_dirty):
 			return True
-		elif(self in set_target_traversed):
+		elif(self in set_str_traversed):
 			return False
 		else:
-			set_target_traversed.add(self)
+			set_str_traversed.add(self.str_target)
 			#
 			if(len(lst_lst_target_layers) <= int_layer):
 				lst_lst_target_layers.append([])
 			#
 			b_childrenDirty = False
 			for dep in self.lst_target_deps:
-				if(dep.b_addToBuildTree(lst_lst_target_layers, int_layer+1, set_target_traversed, set_target_dirty)):
+				if(dep.b_addToBuildTree(lst_lst_target_layers, int_layer+1, set_str_traversed, set_str_dirty, set_target_dirty)):
 					b_childrenDirty = True
 			#
 			b_selfDirty = self._b_dirty()
 			if(b_childrenDirty or b_selfDirty):
 				lst_lst_target_layers[int_layer].append(self)
+				set_str_dirty.add(self.str_target)
 				set_target_dirty.add(self)
 
 	def _b_dirty(self):

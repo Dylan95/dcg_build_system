@@ -39,6 +39,7 @@ class Target_Obj(Target):
 				self.str_target, 
 				self.lst_target_deps[0].str_target, 
 				self.lst_target_deps[1].str_target,
+				self.lst_target_deps[1].lst_target_deps[0].str_target, #header dep, needed for choosing include flags
 				TargetThreadData_data
 			)
 

@@ -1,0 +1,1 @@
+the -H flag is used to show what headers are used.  You should see a "! "... wherever a precompiled header is used.

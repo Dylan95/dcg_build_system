@@ -1,3 +1,0 @@
-/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/src/s2.cpp
-/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/src/s1.cpp
-/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/src/s0.cpp

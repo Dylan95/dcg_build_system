@@ -14,7 +14,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 from target.Target import *
 
 class Target_PCH(Target):
-
 	def __init__(self, str_pch, target_header, lst_target_headers, compiler, perf):
 		self.compiler = compiler
 		#
