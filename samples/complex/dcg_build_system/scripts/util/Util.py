@@ -17,8 +17,32 @@ import subprocess
 import sys
 import tempfile
 import time
+import collections
+import json
 
 class Util:
+	
+	@staticmethod
+	def map_jsonLoadFolder(str_dir):
+		map_result = {}
+		for str_path in Util.lst_recursiveFiles(str_dir):
+			if(str_path.endswith("json")):
+				map_m = json.loads(Util.str_readFile(str_path))
+				#input("map_m")
+				#input(map_m)
+				Util.map_mergeMaps(map_result, map_m)
+		return map_result
+	
+	@staticmethod
+	def map_mergeMaps(map_insert, map_copy):
+		for key,val in map_copy.items():
+			if(
+				isinstance(val, collections.Mapping) and
+				((key in map_insert) and isinstance(map_insert[key], dict))
+			):
+				Util.map_mergeMaps(map_insert[key], val)
+			else:
+				map_insert[key] = val
 	
 	@staticmethod
 	def str_readFile(str_filename):

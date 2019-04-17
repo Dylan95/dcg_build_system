@@ -36,10 +36,11 @@ str_projectDir = os.path.dirname(str_buildSysDir)
 #
 str_buildDir = os.path.join(str_buildSysDir, "build")
 str_logsDir = os.path.join(str_buildSysDir, "logs")
+str_configDir = os.path.join(str_buildSysDir, "config")
 #
-rootNode = json.loads(Util.str_readFile(
-	os.path.join(str_buildSysDir, "config.json")
-))
+str_lastConfigPath = os.path.join(str_buildDir, "last_config.json")
+#
+rootNode = Util.map_jsonLoadFolder(str_configDir)
 
 def main():
 	if not os.path.exists(str_buildDir):
@@ -47,6 +48,7 @@ def main():
 	if not os.path.exists(str_logsDir):
 		os.makedirs(str_logsDir)
 	#
+	#input(rootNode)
 	perf = Perf()
 	timeStart = timeit.default_timer()
 	logs = Logs(str_logsDir)
@@ -81,9 +83,17 @@ def parseArgs(perf):
 			else:
 				makeModule(sys.argv[2], sys.argv[3], perf)
 			#
-			shutil.copyfile(
-				os.path.join(str_buildSysDir, "config.json"),
-				os.path.join(str_buildDir, "last_config.json")
+			#shutil.copyfile(
+			#	os.path.join(str_buildSysDir, "config.json"),
+			#	os.path.join(str_buildDir, "last_config.json")
+			#)
+			Util.writeFile_str(
+				str_lastConfigPath, 
+				json.dumps(
+					rootNode,
+					indent=4, 
+					sort_keys=False
+				).replace("    ", "\t")
 			)
 		elif(sys.argv[1] == "-clean"):
 			if(len(sys.argv) == 2):
@@ -171,7 +181,6 @@ def cleanBin(str_configName):
 #but I don't want it to be nessecary to rebuild a massive project with many 
 #modules just because a setting in one particular module was changed.
 def _checkLastBuild():
-	str_lastConfigPath = os.path.join(str_buildDir, "last_config.json")
 	if(os.path.exists(str_lastConfigPath)):
 		lastRoot = json.loads(Util.str_readFile(str_lastConfigPath))
 		for str_configKey in rootNode["configurations"]:
