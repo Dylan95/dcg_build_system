@@ -20,7 +20,7 @@ from project.Perf import *
 #from multiprocessing import Process, Queue, Lock #Queues are thread and process safe.
 import multiprocessing
 import threading
-int_useCores = max(1, multiprocessing.cpu_count() - 1)
+#int_useCores = max(1, multiprocessing.cpu_count() - 1)
 
 def TargetThreadData_threadMake(TargetThreadData_data):
 	#print("concurrent make")
@@ -38,11 +38,16 @@ class TargetThreadData:
 class Target:
 	def __init__(self, str_target, lst_target_deps, perf):
 	#def __init__(self, str_target, lst_target_deps):
+		#if(str_target == "Kits\\10\\Include\\10.0.16299.0\\ucrt\\crtdbg.h"):
+		#	input()
+		#if(str_target == "/usr/include/libunwind.h /usr/include/libunwind-x86_64.h"):
+		#	print("Target::__init__")
+		#	input()
 		self.str_target = str_target
 		self.lst_target_deps = lst_target_deps
 		self.perf = perf
 
-	def makeRec(self):
+	def makeRec(self, int_numThreads):
 		#TargetThreadData(self, perf)
 		#
 		lst_lst_target_layers = []
@@ -56,7 +61,13 @@ class Target:
 		#be multithreaded, because that's a race condition.
 		for target_dirty in set_target_dirty:
 			if(target_dirty.str_target != None): #phony targets
+				#print(target_dirty.str_target)
+				#print(os.path.dirname(target_dirty.str_target))
+				#input()
 				if not os.path.exists(os.path.dirname(target_dirty.str_target)):
+					#print(target_dirty.str_target)
+					#print(os.path.dirname(target_dirty.str_target))
+					#input()
 					os.makedirs(os.path.dirname(target_dirty.str_target))
 		#
 		if(len(set_target_dirty) > 1):
@@ -78,13 +89,19 @@ class Target:
 				lst_lst_target_layers
 			))
 			#
-			with multiprocessing.Pool(int_useCores) as p:
+			with multiprocessing.Pool(int_numThreads) as p:
 				for lst_TargetThreadData_layer in reversed(lst_lst_TargetThreadData_layers):
 					if(len(lst_TargetThreadData_layer) != 0):
-						lst_TargetThreadData_results = p.map(
-							TargetThreadData_threadMake, 
-							lst_TargetThreadData_layer
-						)
+						if(int_numThreads == 1):
+							lst_TargetThreadData_results = p.map(
+								TargetThreadData_threadMake, 
+								lst_TargetThreadData_layer
+							)
+						else:
+							lst_TargetThreadData_results = map(
+								TargetThreadData_threadMake, 
+								lst_TargetThreadData_layer
+							)
 						#print(lst_TargetThreadData_results)
 						#input()
 						#

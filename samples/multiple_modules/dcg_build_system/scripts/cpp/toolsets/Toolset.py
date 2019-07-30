@@ -18,9 +18,11 @@ from .GCC_Linker import *
 
 class Toolset:
 
-	def __init__(self, str_toolset):
+	def __init__(self, str_toolset, b_forceForwardSlash, lst_str_rootPathReplace):
 		self.CompilerType = None
 		self.LinkerType = None
+		self.b_forceForwardSlash = b_forceForwardSlash
+		self.lst_str_rootPathReplace = lst_str_rootPathReplace
 		#
 		if(str_toolset == "GCC"):
 			self.CompilerType = GCC_Compiler
@@ -32,14 +34,14 @@ class Toolset:
 	def makeCompiler(self, str_cc, lst_str_cflags, lst_str_includeDirs, str_pchBuildDir):
 		result = self.CompilerType()
 		result.init(
-			str_cc, lst_str_cflags, lst_str_includeDirs, str_pchBuildDir
+			str_cc, lst_str_cflags, lst_str_includeDirs, str_pchBuildDir, self.b_forceForwardSlash, self.lst_str_rootPathReplace
 		)
 		return result
 
 	def makeLinker(self, str_cc, lst_str_lflags, lst_str_libDirs, lst_str_libs):
 		result = self.LinkerType()
 		result.init(
-			str_cc, lst_str_lflags, lst_str_libDirs, lst_str_libs
+			str_cc, lst_str_lflags, lst_str_libDirs, lst_str_libs, self.b_forceForwardSlash, self.lst_str_rootPathReplace
 		)
 		return result
 

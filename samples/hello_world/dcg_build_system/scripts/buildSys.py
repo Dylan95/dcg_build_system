@@ -19,6 +19,9 @@ import time
 import timeit
 import json
 
+import multiprocessing
+import threading
+
 from util.Util import *
 from project.Module import *
 from project.Config import *
@@ -43,10 +46,16 @@ str_lastConfigPath = os.path.join(str_buildDir, "last_config.json")
 rootNode = Util.map_jsonLoadFolder(str_configDir)
 
 def main():
+	#print("main")
+	#print(rootNode["rootPathReplace"])
+	#input()
+	#
 	if not os.path.exists(str_buildDir):
 		os.makedirs(str_buildDir)
 	if not os.path.exists(str_logsDir):
 		os.makedirs(str_logsDir)
+	#
+	int_numThreads = int_getNumThreads()
 	#
 	#input(rootNode)
 	perf = Perf()
@@ -54,13 +63,13 @@ def main():
 	logs = Logs(str_logsDir)
 	logs.start()
 	#
-	parseArgs(perf)
+	parseArgs(perf, int_numThreads)
 	#
 	perf.totalT = timeit.default_timer() - timeStart
-	perf.print()
+	perf.print(int_numThreads)
 	logs.end()
 
-def parseArgs(perf):
+def parseArgs(perf, int_numThreads):
 	str_usage = "usage: (-build | -clean) [config_name] [module_name]"
 	#
 	#verify python version:
@@ -75,18 +84,6 @@ def parseArgs(perf):
 	if(2 <= len(sys.argv) <= 4):
 		if(sys.argv[1] == "-build"):
 			_checkLastBuild()
-			#
-			if(len(sys.argv) == 2):
-				make(perf)
-			elif(len(sys.argv) == 3):
-				makeConfig(sys.argv[2], perf)
-			else:
-				makeModule(sys.argv[2], sys.argv[3], perf)
-			#
-			#shutil.copyfile(
-			#	os.path.join(str_buildSysDir, "config.json"),
-			#	os.path.join(str_buildDir, "last_config.json")
-			#)
 			Util.writeFile_str(
 				str_lastConfigPath, 
 				json.dumps(
@@ -95,6 +92,14 @@ def parseArgs(perf):
 					sort_keys=False
 				).replace("    ", "\t")
 			)
+			#
+			if(len(sys.argv) == 2):
+				make(perf, int_numThreads)
+			elif(len(sys.argv) == 3):
+				makeConfig(sys.argv[2], perf, int_numThreads)
+			else:
+				makeModule(sys.argv[2], sys.argv[3], perf, int_numThreads)
+			#
 		elif(sys.argv[1] == "-clean"):
 			if(len(sys.argv) == 2):
 				clean()
@@ -107,11 +112,14 @@ def parseArgs(perf):
 	else:
 		print(str_usage)
 
-def make(perf):
+def make(perf, int_numThreads):
 	for str_configKey in rootNode["configurations"]:
-		makeConfig(str_configKey, perf)
+		makeConfig(str_configKey, perf, int_numThreads)
 
-def makeConfig(str_configKey, perf):
+def makeConfig(str_configKey, perf, int_numThreads):
+	#print("makeConfig")
+	#print(rootNode["configurations"][str_configKey]["rootPathReplace"])
+	#input()
 	config = Config(
 		rootNode["configurations"][str_configKey],
 		os.path.join(
@@ -119,11 +127,14 @@ def makeConfig(str_configKey, perf):
 			str_configKey
 		),
 		str_projectDir,
-		perf
+		perf,
+		int_numThreads,
+		rootNode["b_forceForwardSlashes"],
+		rootNode["configurations"][str_configKey]["rootPathReplace"]
 	)
-	config.build()
+	config.build(int_numThreads)
 
-def makeModule(str_configKey, str_moduleKey, perf):
+def makeModule(str_configKey, str_moduleKey, perf, int_numThreads):
 	module = Module(
 		rootNode["configurations"][str_configKey]["modules"][str_moduleKey],
 		os.path.join(
@@ -133,10 +144,11 @@ def makeModule(str_configKey, str_moduleKey, perf):
 			str_moduleKey
 		),
 		str_projectDir,
-		Toolset(rootNode["configurations"][str_configKey]["toolset"]),
-		perf
+		Toolset(rootNode["configurations"][str_configKey]["toolset"], rootNode["b_forceForwardSlashes"], rootNode["rootPathReplace"]),
+		perf,
+		int_numThreads
 	)
-	PhonyTarget(module.lst_target_objs, perf).makeRec()
+	PhonyTarget(module.lst_target_objs, perf).makeRec(int_numThreads)
 
 def clean():
 	if os.path.exists(str_buildDir):
@@ -174,6 +186,13 @@ def cleanBin(str_configName):
 		shutil.rmtree(str_path)
 
 #
+
+def int_getNumThreads():
+	int_configThreads = rootNode["num_threads"]
+	if(int_configThreads > 0):
+		return int_configThreads
+	else:
+		return max(1, multiprocessing.cpu_count() + int_configThreads)
 
 #checks the configuration for the last build to see if any changes in the
 #configuration file have occured that require part or all of the last build.

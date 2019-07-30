@@ -10,11 +10,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 '''
 
-import multiprocessing
-import threading
-int_useCores = max(1, multiprocessing.cpu_count() - 1)
-
-
 #the total times
 
 class Perf:
@@ -34,18 +29,18 @@ class Perf:
 		self.compilePchT += Perf_other.compilePchT
 		self.linkT += Perf_other.linkT
 
-	def print(self):
-		if(int_useCores == 1):
+	def print(self, int_numThreads):
+		if(int_numThreads == 1):
 			print("1 thread.  precice times:")
 		else:
 			#because sometimes threads will be waiting for other threads when there's
 			#n-1 tasks to complete for any group of tasks (creating precompiled headers, creating object files, etc), where n is the number of threads, but I've estimated the times by assuming that there are n threads always working.  It probably wont be off by much, maybe a couple seconds.
-			print(str(int_useCores) + " threads, times are slightly off.")
+			print(str(int_numThreads) + " threads, times are slightly off.")
 		print("total time:                    " + str(self.totalT))
-		print("time to make dependancy files: " + str(self.makeDFileT / int_useCores))
-		print("time to compile source:        " + str(self.compileSrcT / int_useCores))
-		print("time to precompile headers:    " + str(self.compilePchT / int_useCores))
-		print("time to link:                  " + str(self.linkT / int_useCores))
+		print("time to make dependancy files: " + str(self.makeDFileT / int_numThreads))
+		print("time to compile source:        " + str(self.compileSrcT / int_numThreads))
+		print("time to precompile headers:    " + str(self.compilePchT / int_numThreads))
+		print("time to link:                  " + str(self.linkT / int_numThreads))
 		print("misc time:                     " + 
 			str(max(0, self.totalT - 
 				((
@@ -53,7 +48,7 @@ class Perf:
 					self.compileSrcT +
 					self.compilePchT +
 					self.linkT
-				) / int_useCores)
+				) / int_numThreads)
 			))
 		)
 

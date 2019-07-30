@@ -1,7 +1,35 @@
+make d file command:
+g++  -M /home/dylan/pyProjects/dcg_build_system/samples/multiple_modules/math/src/Math.cpp  > /home/dylan/pyProjects/dcg_build_system/samples/multiple_modules/dcg_build_system/build/DEBUG/modules/MATH/src_deps/home/dylan/pyProjects/dcg_build_system/samples/multiple_modules/math/src/Math.d
+
+
+make d file command:
+g++  -M /home/dylan/pyProjects/dcg_build_system/samples/multiple_modules/main/src/main.cpp  > /home/dylan/pyProjects/dcg_build_system/samples/multiple_modules/dcg_build_system/build/DEBUG/modules/MAIN/src_deps/home/dylan/pyProjects/dcg_build_system/samples/multiple_modules/main/src/main.d
+
+
+make d file command:
+g++  -M /home/dylan/pyProjects/dcg_build_system/samples/multiple_modules/graphics/src/Graphics.cpp  > /home/dylan/pyProjects/dcg_build_system/samples/multiple_modules/dcg_build_system/build/DEBUG/modules/GRAPHICS/src_deps/home/dylan/pyProjects/dcg_build_system/samples/multiple_modules/graphics/src/Graphics.d
+
+
+compile command:
+g++  -c -o /home/dylan/pyProjects/dcg_build_system/samples/multiple_modules/dcg_build_system/build/DEBUG/modules/MATH/objs/home/dylan/pyProjects/dcg_build_system/samples/multiple_modules/math/src/Math.o /home/dylan/pyProjects/dcg_build_system/samples/multiple_modules/math/src/Math.cpp 
+
+
+compile command:
+g++  -c -o /home/dylan/pyProjects/dcg_build_system/samples/multiple_modules/dcg_build_system/build/DEBUG/modules/MAIN/objs/home/dylan/pyProjects/dcg_build_system/samples/multiple_modules/main/src/main.o /home/dylan/pyProjects/dcg_build_system/samples/multiple_modules/main/src/main.cpp 
+
+
+compile command:
+g++  -c -o /home/dylan/pyProjects/dcg_build_system/samples/multiple_modules/dcg_build_system/build/DEBUG/modules/GRAPHICS/objs/home/dylan/pyProjects/dcg_build_system/samples/multiple_modules/graphics/src/Graphics.o /home/dylan/pyProjects/dcg_build_system/samples/multiple_modules/graphics/src/Graphics.cpp 
+
+
+link command:
+g++  /home/dylan/pyProjects/dcg_build_system/samples/multiple_modules/dcg_build_system/build/DEBUG/modules/MATH/objs/home/dylan/pyProjects/dcg_build_system/samples/multiple_modules/math/src/Math.o /home/dylan/pyProjects/dcg_build_system/samples/multiple_modules/dcg_build_system/build/DEBUG/modules/MAIN/objs/home/dylan/pyProjects/dcg_build_system/samples/multiple_modules/main/src/main.o /home/dylan/pyProjects/dcg_build_system/samples/multiple_modules/dcg_build_system/build/DEBUG/modules/GRAPHICS/objs/home/dylan/pyProjects/dcg_build_system/samples/multiple_modules/graphics/src/Graphics.o -o /home/dylan/pyProjects/dcg_build_system/samples/multiple_modules/dcg_build_system/build/DEBUG/bin/program.exc -L"/home/dylan/pyProjects/dcg_build_system/samples/multiple_modules/libs" 
+
+
 3 threads, times are slightly off.
-total time:                    0.0024983759976748843
-time to make dependancy files: 0.0
-time to compile source:        0.0
+total time:                    0.27865829200072767
+time to make dependancy files: 0.016021409666488278
+time to compile source:        0.026730070333845408
 time to precompile headers:    0.0
-time to link:                  0.0
-misc time:                     0.0024983759976748843
+time to link:                  0.01463871133334275
+misc time:                     0.22126810066705124

@@ -1,7 +1,10 @@
 {
+	"num_threads": -1,
+	"b_forceForwardSlashes": false,
 	"configurations": {
 		"DEBUG": {
 			"toolset": "GCC",
+			"rootPathReplace": [],
 			"bin": {
 				"bin_name": "program.exc",
 				"cc": "g++",

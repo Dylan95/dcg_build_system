@@ -18,7 +18,9 @@ class Compiler:
 		str_cc,
 		lst_str_cflags,
 		lst_str_includeDirs,
-		str_pchBuildDir
+		str_pchBuildDir,
+		b_forceForwardSlash,
+		lst_str_rootPathReplace 
 	):
 		assert(False)
 

@@ -25,11 +25,11 @@ from cpp.toolsets.Toolset import *
 
 class Config:
 
-	def __init__(self, nodeConfig, str_buildDir, str_projectDir, perf):
+	def __init__(self, nodeConfig, str_buildDir, str_projectDir, perf, int_numThreads, b_forceForwardSlashes, lst_str_rootPathReplace):
 		self.modules = None
 		self.bin = None
 		#
-		toolset = Toolset(nodeConfig["toolset"])
+		toolset = Toolset(nodeConfig["toolset"], b_forceForwardSlashes, lst_str_rootPathReplace)
 		self.modules = Config.Modules(
 			nodeConfig["modules"],
 			os.path.join(
@@ -38,7 +38,8 @@ class Config:
 			),
 			str_projectDir,
 			toolset,
-			perf
+			perf,
+			int_numThreads
 		)
 		#
 		self.bin = Bin(
@@ -53,13 +54,13 @@ class Config:
 			perf
 		)
 
-	def build(self):
-		self.bin.makeRec()
+	def build(self, int_numThreads):
+		self.bin.makeRec(int_numThreads)
 
 	#
 
 	class Modules:
-		def __init__(self, nodeModules, str_buildDir, str_projectDir, toolset, perf):
+		def __init__(self, nodeModules, str_buildDir, str_projectDir, toolset, perf, int_numThreads):
 			self.lst_modules = []
 			#
 			for str_nodeModuleKey in nodeModules:
@@ -71,7 +72,8 @@ class Config:
 					),
 					str_projectDir,
 					toolset,
-					perf
+					perf,
+					int_numThreads
 				)
 				self.lst_modules.append(module)
 		#

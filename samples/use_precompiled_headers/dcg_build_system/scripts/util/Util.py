@@ -111,7 +111,7 @@ class Util:
 		else:
 			result = lst_paths[0]
 			for str_path in lst_paths[1:]:
-				os.path.join(result, str_path)
+				result = os.path.join(result, str_path)
 			return result
 		
 	#see:
@@ -126,11 +126,17 @@ class Util:
 	@staticmethod
 	def absToRel(str_abs):
 		str_pathPart = os.path.splitdrive(str_abs)[1]
+		#lst_split = str_pathPart.split(os.sep + "|" + "/")
 		lst_split = str_pathPart.split(os.sep)
-		#print("SPLIT: " + str(lst_split))
+		str_result = lst_split[0]
 		for str_item in lst_split[1:]:
-			lst_split[0] = os.path.join(lst_split[0], str_item)
-		return(lst_split[0])
+			str_result = os.path.join(str_result, str_item)
+		#if(str_abs.endswith("image_DXT.o")):
+		#	print("absToRel:")
+		#	print(str_abs)
+		#	print(str_result)
+		#	input()
+		return(str_result)
 
 	#
 
@@ -139,11 +145,14 @@ class Util:
 	#returns an absolute path.  if rawPath is local, it'll be relative to projectDir
 	@staticmethod
 	def str_projectPath(str_rawPath, str_projectDir):
+		if("\\" in str_rawPath):
+			print(rawPath)
+			print("error: path has backslashes in it.  Use only forward slashes for seperators, they will be converted to windows' uncivilized format internally when absolutely nessecary.")
+			intentional_crash
 		lst_path = str_rawPath.split("/")
 		str_path = Util.joinPaths(lst_path)
-		if(not os.path.isabs(str_path)):
-			str_rawPath = os.path.join(str_projectDir, str_rawPath)
-		return str_rawPath
+		#
+		return os.path.join(str_projectDir, str_rawPath)
 
 	#
 

@@ -28,6 +28,10 @@ class Target_Obj(Target):
 			super().__init__(str_obj, [target_src] + [target_pch] + lst_target_headers, perf)
 
 	def rule(self, TargetThreadData_data):
+		#if(self.str_target.endswith("image_DXT.o")):
+		#	print("Target_Obj:")
+		#	print(self.str_target)
+		#	input()
 		if(self.target_pch == None):
 			self.compiler.compile(
 				self.str_target, 

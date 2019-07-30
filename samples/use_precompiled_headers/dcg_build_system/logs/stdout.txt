@@ -1,7 +1,51 @@
+make d file command:
+g++ -I"/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/pch" -M /home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/pch/s0_pch.hpp -H > /home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/dcg_build_system/build/DEBUG/modules/MAIN/pch_deps/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/pch/s0_pch.d
+
+
+make d file command:
+g++ -I"/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/pch" -M /home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/pch/general_pch.hpp -H > /home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/dcg_build_system/build/DEBUG/modules/MAIN/pch_deps/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/pch/general_pch.d
+
+
+make d file command:
+g++ -I"/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/pch" -M /home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/src/s2.cpp -H > /home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/dcg_build_system/build/DEBUG/modules/MAIN/src_deps/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/src/s2.d
+
+
+make d file command:
+g++ -I"/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/pch" -M /home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/src/s1.cpp -H > /home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/dcg_build_system/build/DEBUG/modules/MAIN/src_deps/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/src/s1.d
+
+
+make d file command:
+g++ -I"/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/pch" -M /home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/src/s0.cpp -H > /home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/dcg_build_system/build/DEBUG/modules/MAIN/src_deps/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/src/s0.d
+
+
+precompile header command:
+g++ -I"/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/pch" -c -o /home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/dcg_build_system/build/DEBUG/modules/MAIN/pch/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/pch/general_pch.hpp.gch /home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/pch/general_pch.hpp -H
+
+
+precompile header command:
+g++ -I"/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/pch" -c -o /home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/dcg_build_system/build/DEBUG/modules/MAIN/pch/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/pch/s0_pch.hpp.gch /home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/pch/s0_pch.hpp -H
+
+
+compile with pch command:
+g++ -I"/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/dcg_build_system/build/DEBUG/modules/MAIN/pch/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/pch" -I"/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/pch" -c -o /home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/dcg_build_system/build/DEBUG/modules/MAIN/objs/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/src/s2.o /home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/src/s2.cpp -H
+
+
+compile with pch command:
+g++ -I"/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/dcg_build_system/build/DEBUG/modules/MAIN/pch/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/pch" -I"/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/pch" -c -o /home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/dcg_build_system/build/DEBUG/modules/MAIN/objs/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/src/s1.o /home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/src/s1.cpp -H
+
+
+compile with pch command:
+g++ -I"/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/dcg_build_system/build/DEBUG/modules/MAIN/pch/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/pch" -I"/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/pch" -c -o /home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/dcg_build_system/build/DEBUG/modules/MAIN/objs/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/src/s0.o /home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/src/s0.cpp -H
+
+
+link command:
+g++  /home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/dcg_build_system/build/DEBUG/modules/MAIN/objs/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/src/s2.o /home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/dcg_build_system/build/DEBUG/modules/MAIN/objs/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/src/s1.o /home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/dcg_build_system/build/DEBUG/modules/MAIN/objs/home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/src/s0.o -o /home/dylan/pyProjects/dcg_build_system/samples/use_precompiled_headers/dcg_build_system/build/DEBUG/bin/program.exc  
+
+
 3 threads, times are slightly off.
-total time:                    0.00020622300144168548
-time to make dependancy files: 0.0
-time to compile source:        0.0
-time to precompile headers:    0.0
-time to link:                  0.0
-misc time:                     0.00020622300144168548
+total time:                    1.6121984050005267
+time to make dependancy files: 0.14941203033383013
+time to compile source:        0.05280272399977548
+time to precompile headers:    0.2508808746667152
+time to link:                  0.030769223666842056
+misc time:                     1.1283335523333637

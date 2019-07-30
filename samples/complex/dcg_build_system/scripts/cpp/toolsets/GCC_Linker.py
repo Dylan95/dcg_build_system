@@ -25,14 +25,28 @@ class GCC_Linker(Linker):
 		str_cc,
 		lst_str_lflags,
 		lst_str_libDirs,
-		lst_str_libs
+		lst_str_libs,
+		b_forceForwardSlash,
+		lst_str_rootPathReplace 
 	):
 		self.str_cc = str_cc
 		self.lst_str_lflags = lst_str_lflags
 		self.lst_str_libDirs = lst_str_libDirs
 		self.lst_str_libs = lst_str_libs
-
+		self.b_forceForwardSlash = b_forceForwardSlash
+		self.lst_str_rootPathReplace = lst_str_rootPathReplace
+		#
+		self.lst_str_libDirs = map(
+			(lambda str_libDir: self._str_rootPathReplace(str_libDir)),
+			self.lst_str_libDirs
+		)
+		
 	def link(self, str_bin, lst_str_objs, TargetThreadData_data):
+		lst_str_objs = map(
+			(lambda str_obj: self._str_rootPathReplace(str_obj)),
+			lst_str_objs
+		)
+		str_bin = self._str_rootPathReplace(str_bin)
 		TargetThreadData_data.perf.linkT += self._exec(
 			"link command",
 			str(
@@ -50,6 +64,9 @@ class GCC_Linker(Linker):
 
 	#returns: time to execute the command
 	def _exec(self, str_description, str_command):
+		if self.b_forceForwardSlash:
+			str_command = str_command.replace("\\","/")
+		#
 		print(str_description + ":\n" + str_command + "\n\n")
 		tStart = timeit.default_timer()
 		exitCode = os.system(str_command);
@@ -92,5 +109,12 @@ class GCC_Linker(Linker):
 			result = result[0:-1]
 		return result
 
+	def _str_rootPathReplace(self, str_path):
+		if((len(self.lst_str_rootPathReplace) == 0) or (not str_path.startswith(self.lst_str_rootPathReplace[0]))):
+			#print(self.lst_str_rootPathReplace)
+			#input()
+			return str_path
+		else:
+			return str_path.replace(self.lst_str_rootPathReplace[0], self.lst_str_rootPathReplace[1], 1)
 
 

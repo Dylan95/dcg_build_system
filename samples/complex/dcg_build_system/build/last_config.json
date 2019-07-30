@@ -1,18 +1,21 @@
 {
+	"num_threads": -1,
+	"b_forceForwardSlashes": false,
 	"configurations": {
 		"DEBUG": {
 			"bin": {
-				"lflags": [],
+				"bin_name": "program.exc",
+				"cc": "g++",
 				"libs": [],
+				"lflags": [],
 				"lib_directories": [
 					"libs"
-				],
-				"cc": "g++",
-				"bin_name": "program.exc"
+				]
 			},
+			"rootPathReplace": [],
+			"toolset": "GCC",
 			"modules": {
 				"MAIN": {
-					"pch": [],
 					"src": {
 						"search": {
 							"directories_recursive": [],
@@ -28,7 +31,6 @@
 						"src": []
 					},
 					"cc": "g++",
-					"cflags": [],
 					"include_directories": {
 						"include_directories_recursive": [
 							"include_recursive"
@@ -37,10 +39,11 @@
 							"include",
 							"include/include2"
 						]
-					}
+					},
+					"cflags": [],
+					"pch": []
 				}
-			},
-			"toolset": "GCC"
+			}
 		}
 	}
 }

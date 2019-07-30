@@ -30,7 +30,7 @@ from .Search import *
 #a group of source files to compile, and the compiler configuration.
 class Module:
 
-	def __init__(self, nodeModule, str_buildDir, str_projectDir, toolset, perf):
+	def __init__(self, nodeModule, str_buildDir, str_projectDir, toolset, perf, int_numThreads):
 		self.compiler = None
 		self.lst_target_objs = []
 		#
@@ -55,11 +55,15 @@ class Module:
 			str_src = Util.str_projectPath(nodePch["src"], str_projectDir)
 			str_pch = Util.str_projectPath(nodePch["pch"], str_projectDir)
 			dict_str_pchConfig[str_src] = str_pch
-			dict_pch[str_src] = self._createPCH(str_pch, STR_DIR_PCH, STR_DIR_PCH_DEPS, perf)
+			dict_pch[str_src] = self._createPCH(str_pch, STR_DIR_PCH, STR_DIR_PCH_DEPS, perf, int_numThreads)
 		#
 		lst_str_srcWherePchUsed = []
 		for str_src in info.lst_str_src:
 			target_src = LeafTarget(str_src)
+			#print("str_srcRel:")
+			#print(str_src)
+			#print(Util.absToRel(str_src))
+			#input()
 			str_srcRel = Util.absToRel(str_src)
 			#
 			pch = (
@@ -70,6 +74,22 @@ class Module:
 			if(pch != None):
 				lst_str_srcWherePchUsed.append(str_src)
 			#
+			#print("Module: before Target_Obj")
+			#print(str_srcRel)
+			#print(os.path.splitext(str_srcRel))
+			#print(STR_DIR_OBJ_DEPS)
+			#print(self.compiler.str_objName(str_srcRel))
+			#print(os.path.join(
+			#	STR_DIR_OBJ_DEPS,
+			#	os.path.splitext(str_srcRel)[0] + ".d"
+			#))
+			#input()
+			#if(os.path.join(
+			#	STR_DIR_OBJ_DEPS,
+			#	os.path.splitext(str_srcRel)[0] + ".d"
+			#) == "/usr/include/libunwind.h /usr/include/libunwind-x86_64.h"):
+			#	print("Target::__init__ 0")
+			#	input()
 			obj = Target_Obj(
 				os.path.join(
 					STR_DIR_OBJS,
@@ -82,7 +102,8 @@ class Module:
 						os.path.splitext(str_srcRel)[0] + ".d"
 					),
 					target_src,
-					perf
+					perf,
+					int_numThreads
 				),
 				self.compiler,
 				perf,
@@ -100,7 +121,7 @@ class Module:
 
 	#
 
-	def _createPCH(self, str_pchHeader, str_pchDir, str_depDir, perf):
+	def _createPCH(self, str_pchHeader, str_pchDir, str_depDir, perf, int_numThreads):
 		target_pchHeader = LeafTarget(str_pchHeader)
 		str_headerRel = Util.absToRel(target_pchHeader.str_target)
 		#
@@ -116,7 +137,8 @@ class Module:
 					os.path.splitext(str_headerRel)[0] + ".d"
 				),
 				target_pchHeader,
-				perf
+				perf,
+				int_numThreads
 			),
 			self.compiler,
 			perf
@@ -124,14 +146,18 @@ class Module:
 		return result
 
 	#makes a DFile and returns the contents
-	def _lst_target_makeDFile(self, str_dFile, target_file, perf):
+	def _lst_target_makeDFile(self, str_dFile, target_file, perf, int_numThreads):
+		#print("BEFORE")
+		#input()
 		dFile = Target_DFile(
 			str_dFile,
 			target_file, 
 			self.compiler,
 			perf
 		)
-		dFile.makeRec()
+		#print("AFTER")
+		#input()
+		dFile.makeRec(int_numThreads)
 		return dFile.lst_target_getTargets()
 
 	#

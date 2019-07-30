@@ -33,7 +33,15 @@ class Target_DFile(Target):
 
 	def lst_target_getTargets(self):
 		results = []
-		for str_header in Util.str_readFile(self.str_target).split():
-			results.append(LeafTarget(str_header))
+		for str_header in Util.str_readFile(self.str_target).split("\n"):
+			if(str_header != ""):
+				#if(str_header == "/usr/include/libunwind.h /usr/include/libunwind-x86_64.h"):
+				#	print("Target::__init__ 1")
+				#	input()
+				#print("Target_DFile::lst_target_getTargets")
+				#print(self.str_target)
+				#print(str_header)
+				#input()
+				results.append(LeafTarget(str_header))
 		return results
 

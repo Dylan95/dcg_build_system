@@ -19,7 +19,9 @@ class Linker:
 		str_cc,
 		lst_str_lflags,
 		lst_str_libDirs,
-		lst_str_libs
+		lst_str_libs,
+		b_forceForwardSlash,
+		lst_str_rootPathReplace 
 	):
 		assert(False)
 
