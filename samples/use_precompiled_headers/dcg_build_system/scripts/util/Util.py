@@ -27,6 +27,7 @@ class Util:
 		map_result = {}
 		for str_path in sorted(Util.lst_recursiveFiles(str_dir)):
 			if(str_path.endswith("json")):
+				print("parsing: " + str_path)
 				map_m = json.loads(Util.str_readFile(str_path))
 				Util.map_mergeJsonMaps(map_result, map_m)
 		return map_result
