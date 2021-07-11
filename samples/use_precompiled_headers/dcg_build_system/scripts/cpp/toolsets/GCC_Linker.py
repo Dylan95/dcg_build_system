@@ -31,15 +31,19 @@ class GCC_Linker(Linker):
 	):
 		self.str_cc = str_cc
 		self.lst_str_lflags = lst_str_lflags
-		self.lst_str_libDirs = lst_str_libDirs
+		#self.lst_str_libDirs = lst_str_libDirs
 		self.lst_str_libs = lst_str_libs
 		self.b_forceForwardSlash = b_forceForwardSlash
 		self.lst_str_rootPathReplace = lst_str_rootPathReplace
 		#
-		self.lst_str_libDirs = map(
-			(lambda str_libDir: self._str_rootPathReplace(str_libDir)),
-			self.lst_str_libDirs
-		)
+		#causes problems with multithreading for some reason
+		#self.lst_str_libDirs = map(
+			#(lambda str_libDir: self._str_rootPathReplace(str_libDir)),
+			#self.lst_str_libDirs
+		#)
+		self.lst_str_libDirs = []
+		for str_libDir in lst_str_libDirs:
+			self.lst_str_libDirs.append(self._str_rootPathReplace(str_libDir))
 		
 	def link(self, str_bin, lst_str_objs, TargetThreadData_data):
 		lst_str_objs = map(

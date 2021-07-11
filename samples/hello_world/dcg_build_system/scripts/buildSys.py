@@ -55,22 +55,9 @@ def main():
 	if not os.path.exists(str_logsDir):
 		os.makedirs(str_logsDir)
 	#
-	int_numThreads = int_getNumThreads()
+	#process args
 	#
-	#input(rootNode)
-	perf = Perf()
-	timeStart = timeit.default_timer()
-	logs = Logs(str_logsDir)
-	logs.start()
-	#
-	parseArgs(perf, int_numThreads)
-	#
-	perf.totalT = timeit.default_timer() - timeStart
-	perf.print(int_numThreads)
-	logs.end()
-
-def parseArgs(perf, int_numThreads):
-	str_usage = "usage: (-build | -clean) [config_name] [module_name]"
+	str_usage = "usage: (-build | -clean) <config_name> [module_name]"
 	#
 	#verify python version:
 	if(sys.version_info[0] != 3):
@@ -82,7 +69,7 @@ def parseArgs(perf, int_numThreads):
 		sys.exit(2)
 	#
 	if(2 <= len(sys.argv) <= 4):
-		if(sys.argv[1] == "-build"):
+		if((sys.argv[1] == "-build") and (len(sys.argv) >= 3)):
 			_checkLastBuild()
 			Util.writeFile_str(
 				str_lastConfigPath, 
@@ -93,13 +80,23 @@ def parseArgs(perf, int_numThreads):
 				).replace("    ", "\t")
 			)
 			#
-			if(len(sys.argv) == 2):
-				make(perf, int_numThreads)
-			elif(len(sys.argv) == 3):
-				makeConfig(sys.argv[2], perf, int_numThreads)
-			else:
-				makeModule(sys.argv[2], sys.argv[3], perf, int_numThreads)
+			#input(rootNode)
+			perf = Perf()
+			timeStart = timeit.default_timer()
+			logs = Logs(str_logsDir)
+			logs.start()
 			#
+			str_configKey = sys.argv[2];
+			int_numThreads = int_getNumThreads(str_configKey)
+			if(len(sys.argv) == 3):
+				makeConfig(str_configKey, perf, int_numThreads)
+			else:
+				str_moduleKey = sys.argv[3]
+				makeModule(str_configKey, str_moduleKey, perf, int_numThreads)
+			#
+			perf.totalT = timeit.default_timer() - timeStart
+			perf.print(int_numThreads)
+			logs.end()
 		elif(sys.argv[1] == "-clean"):
 			if(len(sys.argv) == 2):
 				clean()
@@ -111,10 +108,6 @@ def parseArgs(perf, int_numThreads):
 			print(str_usage)
 	else:
 		print(str_usage)
-
-def make(perf, int_numThreads):
-	for str_configKey in rootNode["configurations"]:
-		makeConfig(str_configKey, perf, int_numThreads)
 
 def makeConfig(str_configKey, perf, int_numThreads):
 	#print("makeConfig")
@@ -129,7 +122,7 @@ def makeConfig(str_configKey, perf, int_numThreads):
 		str_projectDir,
 		perf,
 		int_numThreads,
-		rootNode["b_forceForwardSlashes"],
+		rootNode["configurations"][str_configKey]["b_forceForwardSlashes"],
 		rootNode["configurations"][str_configKey]["rootPathReplace"]
 	)
 	config.build(int_numThreads)
@@ -144,7 +137,7 @@ def makeModule(str_configKey, str_moduleKey, perf, int_numThreads):
 			str_moduleKey
 		),
 		str_projectDir,
-		Toolset(rootNode["configurations"][str_configKey]["toolset"], rootNode["b_forceForwardSlashes"], rootNode["rootPathReplace"]),
+		Toolset(rootNode["configurations"][str_configKey]["toolset"], rootNode["configurations"][str_configKey]["b_forceForwardSlashes"], rootNode["rootPathReplace"]),
 		perf,
 		int_numThreads
 	)
@@ -154,6 +147,7 @@ def clean():
 	if os.path.exists(str_buildDir):
 		shutil.rmtree(str_buildDir)
 		os.mkdir(str_buildDir)
+	print("\ndone\n")
 
 def cleanConfig(str_configName):
 	print("clean config")
@@ -187,8 +181,8 @@ def cleanBin(str_configName):
 
 #
 
-def int_getNumThreads():
-	int_configThreads = rootNode["num_threads"]
+def int_getNumThreads(str_configKey):
+	int_configThreads = rootNode["configurations"][str_configKey]["num_threads"]
 	if(int_configThreads > 0):
 		return int_configThreads
 	else:

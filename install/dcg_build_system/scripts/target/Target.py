@@ -93,12 +93,12 @@ class Target:
 				for lst_TargetThreadData_layer in reversed(lst_lst_TargetThreadData_layers):
 					if(len(lst_TargetThreadData_layer) != 0):
 						if(int_numThreads == 1):
-							lst_TargetThreadData_results = p.map(
+							lst_TargetThreadData_results = map(
 								TargetThreadData_threadMake, 
 								lst_TargetThreadData_layer
 							)
 						else:
-							lst_TargetThreadData_results = map(
+							lst_TargetThreadData_results = p.map(
 								TargetThreadData_threadMake, 
 								lst_TargetThreadData_layer
 							)
