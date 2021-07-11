@@ -4,3 +4,4 @@
 !./samples/hello_world/dcg_build_system/build/
 !./samples/multiple_modules/dcg_build_system/build/
 !./samples/use_precompiled_headers/dcg_build_system/build/
+*.pyc
