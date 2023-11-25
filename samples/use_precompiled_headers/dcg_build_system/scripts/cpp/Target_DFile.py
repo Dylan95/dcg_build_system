@@ -33,15 +33,15 @@ class Target_DFile(Target):
 
 	def lst_target_getTargets(self):
 		results = []
-		for str_header in Util.str_readFile(self.str_target).split("\n"):
-			if(str_header != ""):
-				#if(str_header == "/usr/include/libunwind.h /usr/include/libunwind-x86_64.h"):
-				#	print("Target::__init__ 1")
-				#	input()
-				#print("Target_DFile::lst_target_getTargets")
-				#print(self.str_target)
-				#print(str_header)
-				#input()
-				results.append(LeafTarget(str_header))
+		for str_line in Util.str_readFile(self.str_target).split():
+			if str_line.endswith("\\"):
+				#sometimes the format for the *.d output by the compiler is different, it probably has to do with the included files.  It looks something like this:
+				#linux_only_tools.o: \
+				#	/home/dylan/buildSysProjects/osutil/./meta_src/lzz/osutil/debug/linux_only_tools.cpp \
+				#	/usr/lib/gcc/x86_64-linux-gnu/9/../../../../include/c++/9/cxxabi.h \
+				for str_path in str_line.strip(" \t\\").split(" "):
+					if(not str_path.endswith(".o:")):
+						results.append(LeafTarget(str_path))
+			else:
+				results.append(LeafTarget(str_line))
 		return results
-

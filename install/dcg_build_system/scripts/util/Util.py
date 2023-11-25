@@ -36,7 +36,7 @@ class Util:
 	def map_mergeJsonMaps(map_insert, map_copy):
 		for key,val in map_copy.items():
 			if(
-				isinstance(val, collections.Mapping) and
+				isinstance(val, dict) and
 				(key in map_insert)
 			):
 				Util.map_mergeJsonMaps(map_insert[key], val)
