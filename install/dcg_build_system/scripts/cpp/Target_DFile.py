@@ -33,7 +33,7 @@ class Target_DFile(Target):
 
 	def lst_target_getTargets(self):
 		results = []
-		for str_line in Util.str_readFile(self.str_target).split():
+		for str_line in Util.str_readFile(self.str_target).splitlines():
 			if str_line.endswith("\\"):
 				#sometimes the format for the *.d output by the compiler is different, it probably has to do with the included files.  It looks something like this:
 				#linux_only_tools.o: \
@@ -44,4 +44,8 @@ class Target_DFile(Target):
 						results.append(LeafTarget(str_path))
 			else:
 				results.append(LeafTarget(str_line))
-		return results
+		resultsNonEmpty = []
+		for str_result in results:
+			if(str_result!=""):
+				resultsNonEmpty.append(str_result)
+		return resultsNonEmpty
